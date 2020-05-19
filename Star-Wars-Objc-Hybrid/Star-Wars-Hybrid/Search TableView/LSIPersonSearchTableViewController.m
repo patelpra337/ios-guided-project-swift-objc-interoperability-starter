@@ -8,6 +8,10 @@
 
 #import "LSIPersonSearchTableViewController.h"
 
+// TODO: 1. Add both PersonController.swift and PersonTableViewCell.swift to the target
+// TODO: 2. Fix the missing class using the bridging header issue
+// TODO: 3. Import the Auto-generated "Module_Name-Swift.h" header file (always in the .m file)
+
 @interface LSIPersonSearchTableViewController () <UISearchBarDelegate>
 
 // TODO: Create a PersonController.swift and make it an instance variable
