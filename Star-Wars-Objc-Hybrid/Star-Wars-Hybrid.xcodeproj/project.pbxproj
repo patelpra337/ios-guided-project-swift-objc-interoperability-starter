@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		87B9062424DA5359004AC582 /* PersonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8BA117242981D80081039A /* PersonController.swift */; };
+		87B9062524DA5B1F004AC582 /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8BA113242980EF0081039A /* PersonTableViewCell.swift */; };
 		BD101027237A40BE002426B7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BD101026237A40BE002426B7 /* AppDelegate.m */; };
 		BD10102A237A40BE002426B7 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BD101029237A40BE002426B7 /* SceneDelegate.m */; };
 		BD101032237A40C0002426B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD101031237A40C0002426B7 /* Assets.xcassets */; };
@@ -186,6 +188,8 @@
 				BD101038237A40C0002426B7 /* main.m in Sources */,
 				BD10102A237A40BE002426B7 /* SceneDelegate.m in Sources */,
 				BD101042237A4130002426B7 /* LSIPersonSearchTableViewController.m in Sources */,
+				87B9062424DA5359004AC582 /* PersonController.swift in Sources */,
+				87B9062524DA5B1F004AC582 /* PersonTableViewCell.swift in Sources */,
 				BD101045237A42C9002426B7 /* LSIPerson.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

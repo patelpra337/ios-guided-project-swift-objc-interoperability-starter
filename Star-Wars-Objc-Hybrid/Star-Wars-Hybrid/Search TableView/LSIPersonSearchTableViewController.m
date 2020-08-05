@@ -7,14 +7,12 @@
 //
 
 #import "LSIPersonSearchTableViewController.h"
-
-// TODO: 1. Add both PersonController.swift and PersonTableViewCell.swift to the target
-// TODO: 2. Fix the missing class using the bridging header issue
-// TODO: 3. Import the Auto-generated "Module_Name-Swift.h" header file (always in the .m file)
+#import "LSIPerson.h"
+#import "Star_Wars_Hybrid-Swift.h"
 
 @interface LSIPersonSearchTableViewController () <UISearchBarDelegate>
 
-// TODO: Create a PersonController.swift and make it an instance variable
+@property (nonatomic) NSArray<LSIPerson *> *people;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
@@ -24,32 +22,32 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-	// TODO: Implement number of rows
-	
-	return 0;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.people.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-	
-	// TODO: Implement a custom cell named PersonTableViewCell.swift
-	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PersonCell" forIndexPath:indexPath];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	LSIPersonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PersonCell" forIndexPath:indexPath];
     
-	// TODO: Set the cell to the current Person object
-	
+    LSIPerson *person = [self.people objectAtIndex:indexPath.row];
+    
+    cell.person = person;
 	
     return cell;
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    
-	
-	// TODO: Search for a person using the searchBar.text
-    
-	// TODO: Save the result and have the UI update itself
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [LSIPersonController.sharedController searchForPeopleWithSearchTerm:searchBar.text completionHandler:^(NSArray<LSIPerson *> *people, NSError *error) {
+        if (error) {
+            NSLog(@"Error searching for %@: %@", searchBar.text, error);
+        }
+        
+        self.people = people;
+        [self.tableView reloadData];
+    }];
 }
 
 @end

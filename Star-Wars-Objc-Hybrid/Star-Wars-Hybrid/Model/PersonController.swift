@@ -14,14 +14,15 @@ enum APIError: String, Error {
     case JSONMissingResults
 }
 
+@objc(LSIPersonController)
 class PersonController: NSObject {
     // docs: https://lambdaswapi.herokuapp.com/people
     private let baseURL = URL(string: "https://lambdaswapi.herokuapp.com/api/people")!
+    @objc(sharedController)
     static let shared = PersonController()
     
-    // TODO: Add LSIPerson.h to bridging header
-    // TODO: Add PersonController.swift to target
-    func searchForPeople(with searchTerm: String, completion: @escaping ([LSIPerson]?, Error?) -> Void) {
+    @objc(searchForPeopleWithSearchTerm:completionHandler:)
+    func searchForPeople(with searchTerm: String, completion: @escaping (_ people: [Person]?, _ error: Error?) -> Void) {
         var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)!
         let searchItem = URLQueryItem(name: "search", value: searchTerm)
         components.queryItems = [searchItem]
@@ -29,14 +30,38 @@ class PersonController: NSObject {
         
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             if let error = error {
-                return completion(nil, error)
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+                return
             }
             
             guard let data = data else {
-                return completion(nil, APIError.DataNilError)
+                DispatchQueue.main.async {
+                    completion(nil, APIError.DataNilError)
+                }
+                return
             }
             
-            // TODO: Decode the JSON
+            do {
+                guard let dictionary = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any] else {
+                    throw APIError.JSONDecodeError
+                }
+                
+                guard let personDictionaries = dictionary["results"] as? [[String : Any]] else {
+                    throw APIError.JSONMissingResults
+                }
+                
+                let people = personDictionaries.compactMap { Person(dictionary: $0) }
+                
+                DispatchQueue.main.async {
+                    completion(people, nil)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+            }
             
         }.resume()
     }

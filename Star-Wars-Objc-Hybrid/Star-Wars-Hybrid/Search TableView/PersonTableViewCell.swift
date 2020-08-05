@@ -8,20 +8,19 @@
 
 import UIKit
 
+@objc(LSIPersonTableViewCell)
 class PersonTableViewCell: UITableViewCell {
     
-    // TODO: Add LSIPerson.h to the Bridging header
-    // TODO: Add to the Star-Wars-Hybrid target after LSIPerson is defined    
-    var person: LSIPerson? {
+    @objc var person: Person? {
         didSet {
             updateViews()
         }
     }
     
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var heightLabel: UILabel!
-    @IBOutlet weak var birthYearLabel: UILabel!
-    @IBOutlet weak var eyeColorLabel: UILabel!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var heightLabel: UILabel!
+    @IBOutlet var birthYearLabel: UILabel!
+    @IBOutlet var eyeColorLabel: UILabel!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
